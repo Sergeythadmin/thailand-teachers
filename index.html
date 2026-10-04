@@ -9,7 +9,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Header / Navigation -->
+    <!-- Header / Navigation (Indigo / Blue Theme) -->
     <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
@@ -192,22 +192,22 @@
         <section id="tab-online" class="tab-content hidden space-y-6">
             <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 sm:p-8 rounded-2xl shadow-lg">
                 <h2 class="text-2xl font-bold mb-2">Online Teaching Hub for Remote Tutors</h2>
-                <p class="text-blue-100 text-sm max-w-2xl mb-6">Manage virtual classes, coordinate schedules in Thai Standard Time (GMT+7), and access interactive whiteboard tools.</p>
+                <p class="text-indigo-100 text-sm max-w-2xl mb-6">Manage virtual classes, coordinate schedules in Thai Standard Time (GMT+7), and access interactive whiteboard tools.</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20">
                         <i class="fa-solid fa-calendar-days text-2xl text-yellow-300 mb-3"></i>
                         <h3 class="font-bold text-lg mb-1">Schedule Manager</h3>
-                        <p class="text-xs text-blue-100">Sync lessons across time zones with automated student reminders.</p>
+                        <p class="text-xs text-indigo-100">Sync lessons across time zones with automated student reminders.</p>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20">
                         <i class="fa-solid fa-chalkboard-user text-2xl text-yellow-300 mb-3"></i>
                         <h3 class="font-bold text-lg mb-1">Virtual Classroom</h3>
-                        <p class="text-xs text-blue-100">Integrated video rooms, breakout groups, and digital worksheets.</p>
+                        <p class="text-xs text-indigo-100">Integrated video rooms, breakout groups, and digital worksheets.</p>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20">
                         <i class="fa-solid fa-file-invoice-dollar text-2xl text-yellow-300 mb-3"></i>
                         <h3 class="font-bold text-lg mb-1">Payroll & Invoicing</h3>
-                        <p class="text-xs text-blue-100">Track hourly rates, bonuses, and monthly payouts in THB or USD.</p>
+                        <p class="text-xs text-indigo-100">Track hourly rates, bonuses, and monthly payouts in THB or USD.</p>
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="border border-slate-200 p-5 rounded-xl hover:shadow-md transition flex flex-col justify-between">
                         <div>
-                            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded">Grade 6-7 ESL</span>
+                            <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">Grade 6-7 ESL</span>
                             <h3 class="font-bold text-lg text-slate-900 mt-2">Let's Chat! Conversation Fun</h3>
                             <p class="text-xs text-slate-500 mt-1">Interactive speaking prompts, roleplays, and vocabulary exercises.</p>
                         </div>
@@ -236,7 +236,7 @@
                     </div>
                     <div class="border border-slate-200 p-5 rounded-xl hover:shadow-md transition flex flex-col justify-between">
                         <div>
-                            <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">Reading</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Reading</span>
                             <h3 class="font-bold text-lg text-slate-900 mt-2">Mystery & Adventure Readers</h3>
                             <p class="text-xs text-slate-500 mt-1">Engaging stories with comprehension questions for intermediate learners.</p>
                         </div>
@@ -366,7 +366,7 @@
                     <div>
                         <div class="flex justify-between items-start gap-2 mb-2">
                             <span class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-md"><i class="fa-solid fa-location-dot mr-1"></i>${job.location}</span>
-                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">${job.salary}</span>
+                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">${job.salary}</span>
                         </div>
                         <h3 class="font-bold text-lg text-slate-900 mb-1">${job.title}</h3>
                         <p class="text-sm font-medium text-indigo-600 mb-3">${job.school}</p>
@@ -398,7 +398,7 @@
             renderJobs(filtered);
         }
 
-        // Handle Job Submission from Admin Form
+        // Job Submission Form Handler
         function handleJobSubmit(e) {
             e.preventDefault();
             const newJob = {
@@ -407,34 +407,33 @@
                 title: document.getElementById('post-title').value,
                 location: document.getElementById('post-location').value,
                 salary: document.getElementById('post-salary').value,
-                contact: document.getElementById('post-contact').value,
+                contact: document.getElementById('post-location').value.includes('http') ? document.getElementById('post-contact').value : document.getElementById('post-contact').value,
                 desc: document.getElementById('post-desc').value
             };
-
             jobs.unshift(newJob);
             saveJobs();
             document.getElementById('job-form').reset();
-            alert('Job successfully published!');
+            alert('Job listing successfully posted!');
             switchTab('jobs');
         }
 
         // Delete Job
         function deleteJob(id) {
-            if(confirm('Are you sure you want to delete this job listing?')) {
-                jobs = jobs.filter(j => j.id !== id);
+            if(confirm('Are you sure you want to delete this job?')) {
+                jobs = jobs.filter(job => job.id !== id);
                 saveJobs();
                 renderJobs();
             }
         }
 
-        // Handle CV Submission
+        // CV Submission Form Handler
         function handleCvSubmit(e) {
             e.preventDefault();
-            alert('Your CV has been successfully registered and queued for broadcast to participating schools in Thailand!');
+            alert('Your CV and details have been registered successfully for mass application!');
             e.target.reset();
         }
 
-        // Initial render on load
+        // Initial Page Load
         window.onload = function() {
             renderJobs();
         };
