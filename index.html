@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThaiTeacher Hub — Jobs, Resumes, & Resources for Teachers in Thailand</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        sun: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('jobs')">
+                    <div class="w-12 h-12 bg-gradient-to-tr from-brand-600 to-sun-500 rounded-xl flex items-center justify-center text-white text-2xl shadow-md">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold bg-gradient-to-r from-brand-700 to-brand-900 bg-clip-text text-transparent">ThaiTeacher Hub</span>
+                        <p class="text-xs text-slate-500 font-medium">The Professional Portal for Teachers in Thailand</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <button onclick="switchTab('jobs')" id="nav-jobs" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-briefcase"></i><span>Jobs in Thailand</span>
+                    </button>
+                    <button onclick="switchTab('resumes')" id="nav-resumes" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-id-card"></i><span>Resumes & Mass Apply</span>
+                    </button>
+                    <button onclick="switchTab('online')" id="nav-online" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-laptop-code"></i><span>Online Teaching</span>
+                    </button>
+                    <button onclick="switchTab('library')" id="nav-library" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open"></i><span>Textbook Library</span>
+                    </button>
+                    <button onclick="switchTab('marketing')" id="nav-marketing" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-bullhorn"></i><span>SEO & Growth</span>
+                    </button>
+                </nav>
+
+                <!-- Action / CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <button onclick="openNotificationModal('Contact Support: support@thaiteacherhub.com | Telegram: @ThaiTeacherAdmin')" class="px-4 py-2 text-sm font-semibold text-brand-700 bg-brand-100 hover:bg-brand-200 rounded-lg transition-all">
+                        <i class="fa-solid fa-headset mr-1"></i> Support
+                    </button>
+                    <button onclick="switchTab('resumes')" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-md hover:shadow-lg transition-all">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Post Resume
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-700 hover:text-brand-600 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('jobs'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                <i class="fa-solid fa-briefcase w-5"></i><span>Jobs in Thailand</span>
+            </button>
+            <button onclick="switchTab('resumes'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                <i class="fa-solid fa-id-card w-5"></i><span>Resumes & Mass Apply</span>
+            </button>
+            <button onclick="switchTab('online'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                <i class="fa-solid fa-laptop-code w-5"></i><span>Online Teaching</span>
+            </button>
+            <button onclick="switchTab('library'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                <i class="fa-solid fa-book-open w-5"></i><span>Textbook Library</span>
+            </button>
+            <button onclick="switchTab('marketing'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                <i class="fa-solid fa-bullhorn w-5"></i><span>SEO & Growth Guide</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Body Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= TAB 1: JOBS & AI SCRAPER ================= -->
+        <div id="tab-jobs" class="tab-content active">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-r from-brand-800 via-brand-700 to-emerald-900 rounded-3xl p-8 md:p-12 text-white shadow-xl mb-10 overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-sun-500 text-slate-900 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4 inline-block">Teaching Vacancies 2026</span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Teach English & Subjects in Amazing Thailand</h1>
+                    <p class="text-slate-100 text-base md:text-lg mb-6 leading-relaxed">
+                        Discover top teaching opportunities from leading international schools, language centers, and universities across Bangkok, Phuket, Chiang Mai, and Pattaya.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="openAiInfoModal()" class="bg-sun-500 hover:bg-sun-600 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-lg transition-all flex items-center space-x-2">
+                            <i class="fa-solid fa-robot"></i><span>How AI Aggregates Jobs</span>
+                        </button>
+                        <a href="#job-listings-section" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl transition-all">
+                            Browse Listings (<span id="job-count-badge">4</span>)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Scraper Info Banner / Explainer Box -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-amber-500 text-white rounded-xl flex items-center justify-center text-xl shrink-0 mt-1">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-900">AI-Powered Job Aggregation & Scraping</h3>
+                        <p class="text-sm text-amber-800 mt-1">
+                            Can AI collect job information from other websites and copy it here? <strong>Yes!</strong> Our platform uses autonomous AI scrapers to safely aggregate verified teaching vacancies from top boards (Ajarn.com, LinkedIn, Teach Away, and school career pages), removing duplicates and structuring data instantly.
+                        </p>
+                    </div>
+                </div>
+                <button onclick="openAiInfoModal()" class="whitespace-nowrap px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-lg shadow transition-all">
+                    Learn More <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+            <!-- Job Search & Filters Bar -->
+            <div id="job-listings-section" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Search Keywords</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-search"></i>
+                            </span>
+                            <input type="text" id="job-search-input" onkeyup="filterJobs()" placeholder="e.g. English, Math, Bangkok..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Location</label>
+                        <select id="job-location-filter" onchange="filterJobs()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                            <option value="">All Regions in Thailand</option>
+                            <option value="Bangkok">Bangkok</option>
+                            <option value="Phuket">Phuket</option>
+                            <option value="Chiang Mai">Chiang Mai</option>
+                            <option value="Pattaya">Pattaya / Chonburi</option>
+                            <option value="Hua Hin">Hua Hin</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Employment Type</label>
+                        <select id="job-type-filter" onchange="filterJobs()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                            <option value="">All Types</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Online">Online / Remote</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="resetJobFilters()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 rounded-xl text-sm transition-all">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Reset Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Listings Cards Grid -->
+            <div id="job-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Job 1 -->
+                <div class="job-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-location="Bangkok" data-type="Full-time" data-title="English Teacher International School Bangkok">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">Full-time</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> 2 hours ago (AI Aggregated)</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">ESL English Teacher (Primary Years)</h3>
+                        <p class="text-sm font-medium text-brand-600 mb-3"><i class="fa-solid fa-school mr-1"></i> Bangkok International Prep School</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-2">Qualified teacher with BA degree and TEFL/TESOL required for primary classes. Visa sponsorship, medical insurance, and competitive salary included.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-md"><i class="fa-solid fa-location-dot mr-1"></i> Bangkok</span>
+                            <span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-money-bill-wave mr-1"></i> 65,000 - 85,000 THB</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded-md">Work Permit Provided</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">Source: Ajarn.com (AI Scraper)</span>
+                        <button onclick="openApplyModal('English Teacher at Bangkok Prep')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="job-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-location="Phuket" data-type="Full-time" data-title="Math Science Teacher Phuket International">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full">Full-time</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Yesterday (AI Aggregated)</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Math & Science Teacher (Key Stage 3-4)</h3>
+                        <p class="text-sm font-medium text-brand-600 mb-3"><i class="fa-solid fa-school mr-1"></i> HeadStart International School Phuket</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-2">Teaching British curriculum on the island. Excellent compensation package, relocation bonus, and professional development.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-md"><i class="fa-solid fa-location-dot mr-1"></i> Phuket</span>
+                            <span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-money-bill-wave mr-1"></i> 70,000 - 95,000 THB</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded-md">Relocation Package</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">Source: LinkedIn (AI Scraper)</span>
+                        <button onclick="openApplyModal('Math & Science Teacher at HeadStart Phuket')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Job 3 -->
+                <div class="job-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-location="Chiang Mai" data-type="Part-time" data-title="English Tutor Chiang Mai Language Hub">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-amber-50 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">Part-time</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> 3 days ago (AI Aggregated)</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Young Learners English Tutor</h3>
+                        <p class="text-sm font-medium text-brand-600 mb-3"><i class="fa-solid fa-school mr-1"></i> Chiang Mai Bilingual Language Hub</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-2">Flexible schedule with evening and weekend classes. Perfect for digital nomads and educators seeking part-time engagements.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-md"><i class="fa-solid fa-location-dot mr-1"></i> Chiang Mai</span>
+                            <span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-money-bill-wave mr-1"></i> 500 - 700 THB/hour</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded-md">Flexible Schedule</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">Source: Facebook Jobs (AI)</span>
+                        <button onclick="openApplyModal('English Tutor at Chiang Mai Hub')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Job 4 -->
+                <div class="job-card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-location="Online" data-type="Online" data-title="Online ESL Teacher Remote Thailand">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">Online / Remote</span>
+                            <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> 4 days ago (AI Aggregated)</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Remote ESL Instructor for Asian Students</h3>
+                        <p class="text-sm font-medium text-brand-600 mb-3"><i class="fa-solid fa-laptop mr-1"></i> ThaiOnline Education Group</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-2">Work from anywhere in Thailand (beach condo in Pattaya, islands, or Bangkok). Consistent student stream and ready-to-teach materials provided.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-md"><i class="fa-solid fa-location-dot mr-1"></i> Remote (Thailand)</span>
+                            <span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-md font-semibold"><i class="fa-solid fa-money-bill-wave mr-1"></i> 45,000 - 60,000 THB</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded-md">Remote Work</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">Source: Teach Away (AI)</span>
+                        <button onclick="openApplyModal('Online Instructor at ThaiOnline')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty state for search filter -->
+            <div id="no-jobs-found" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200 mt-4">
+                <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                <h3 class="text-lg font-bold text-slate-700">No jobs found matching your criteria</h3>
+                <p class="text-sm text-slate-500 mt-1">Try adjusting your search terms or resetting filters.</p>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: TEACHER RESUMES & MASS APPLY ================= -->
+        <div id="tab-resumes" class="tab-content">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-brand-700 to-emerald-800 rounded-3xl p-8 text-white shadow-lg mb-8">
+                    <span class="bg-sun-500 text-slate-900 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3 inline-block">Teacher Resume Database</span>
+                    <h1 class="text-3xl font-extrabold mb-3">Register Your Resume & Launch Mass Apply</h1>
+                    <p class="text-slate-100 text-sm md:text-base leading-relaxed">
+                        Complete your teacher profile once. Our system will automatically distribute your CV and professional introduction card to HR directors across 120+ international schools and language institutes in Thailand.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                    <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center">
+                        <i class="fa-solid fa-file-pen text-brand-600 mr-2"></i> Teacher Profile & Resume Submission
+                    </h2>
+                    <form id="resume-form" onsubmit="submitResumeForm(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name (as in passport) *</label>
+                                <input type="text" required id="res-name" placeholder="e.g. John Smith" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Contact Email *</label>
+                                <input type="email" required id="res-email" placeholder="teacher@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Primary Teaching Subject *</label>
+                                <select required id="res-subject" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                                    <option value="">Select subject</option>
+                                    <option value="English / ESL">English Language (ESL / EFL)</option>
+                                    <option value="Math & Science">Mathematics & Science</option>
+                                    <option value="Early Years / Kindergarten">Early Years / Kindergarten</option>
+                                    <option value="Other Languages">Other Languages</option>
+                                    <option value="Music / Art / Sports">Music / Art / Sports</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Preferred Location in Thailand *</label>
+                                <select required id="res-location" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                                    <option value="Bangkok">Bangkok</option>
+                                    <option value="Phuket">Phuket</option>
+                                    <option value="Chiang Mai">Chiang Mai</option>
+                                    <option value="Pattaya">Pattaya</option>
+                                    <option value="Any City">Open to Relocate (Any City)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Certificates & Degrees (TEFL, TESOL, CELTA, BA)</label>
+                                <input type="text" id="res-certs" placeholder="e.g. BA in Education, TEFL 120h" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Video Intro Link (YouTube / Google Drive)</label>
+                                <input type="url" id="res-video" placeholder="https://youtube.com/watch?v=..." class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Professional Bio & Teaching Experience *</label>
+                            <textarea required rows="4" id="res-bio" placeholder="Describe your teaching experience, methodology, and why you want to teach in Thailand..." class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <div class="p-4 bg-brand-50 rounded-xl border border-brand-200 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" id="res-mass-apply" checked class="w-5 h-5 text-brand-600 rounded focus:ring-brand-500">
+                                <label for="res-mass-apply" class="text-sm font-semibold text-brand-900 cursor-pointer">
+                                    Automatically send my resume to our verified Thai school partner database upon publishing
+                                </label>
+                            </div>
+                            <span class="hidden sm:inline bg-brand-200 text-brand-800 text-xs font-bold px-2.5 py-1 rounded-md">120+ Schools</span>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i><span>Publish Resume & Launch Mass Apply</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: ONLINE TEACHING PLATFORM ================= -->
+        <div id="tab-online" class="tab-content">
+            <div class="bg-gradient-to-r from-emerald-800 via-teal-700 to-brand-800 rounded-3xl p-8 md:p-12 text-white shadow-xl mb-10">
+                <span class="bg-sun-500 text-slate-900 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4 inline-block">Online Teacher Suite</span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Tools for Online & Remote Educators in Thailand</h1>
+                <p class="text-slate-100 text-base md:text-lg mb-6 leading-relaxed max-w-2xl">
+                    Whether teaching from a beachside bungalow in Phuket or a condominium in Bangkok, utilize our virtual classroom, calendar scheduling, and student management toolkit.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="openNotificationModal('Virtual whiteboard and lesson booking engine activated successfully!')" class="bg-sun-500 hover:bg-sun-600 text-slate-900 font-bold px-6 py-3 rounded-xl shadow transition-all">
+                        <i class="fa-solid fa-chalkboard-user mr-2"></i> Launch Virtual Classroom
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Smart Booking Calendar</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Allow students to book available slots in Bangkok Time (ICT, GMT+7) with automatic time zone conversion for students across Asia and Europe.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">HD Video & Interactive Whiteboard</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Built-in HD video calling with screen sharing, flashcards, and an interactive whiteboard for grammar exercises and games.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">PromptPay & Secure Payments</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Accept lesson payments via Thai PromptPay QR codes, credit cards, and international gateways with zero platform commission.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Calendar Mockup Section -->
+            <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Today's Teaching Schedule (Bangkok Time, GMT+7)</h3>
+                        <p class="text-sm text-slate-500">Monday, October 5, 2026</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                            <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Status: Online & Ready
+                        </span>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-brand-600 text-white font-bold px-3 py-2 rounded-lg text-center min-w-[80px]">
+                                <span class="block text-xs uppercase">Class 1</span>
+                                <span class="text-sm">10:00 AM</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Beginner English (Alice, 10 years old)</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-solid fa-book mr-1"></i> Textbook: English Time Level 2 • Format: Video Call</p>
+                            </div>
+                        </div>
+                        <button onclick="openNotificationModal('Connecting to Virtual Classroom Session #1...')" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-lg shadow transition-all">
+                            <i class="fa-solid fa-video mr-1"></i> Enter Classroom
+                        </button>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-sun-500 text-slate-900 font-bold px-3 py-2 rounded-lg text-center min-w-[80px]">
+                                <span class="block text-xs uppercase">Class 2</span>
+                                <span class="text-sm">02:30 PM</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Business English Conversation Club</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-solid fa-users mr-1"></i> Group of 4 professionals • Format: Interactive Webinar</p>
+                            </div>
+                        </div>
+                        <button onclick="openNotificationModal('Preparing webinar presentation materials...')" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-semibold rounded-lg transition-all">
+                            Prepare Materials
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: TEXTBOOK LIBRARY ================= -->
+        <div id="tab-library" class="tab-content">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Digital Textbook & Resource Library</h1>
+                    <p class="text-slate-600 text-sm md:text-base">Free collection of ESL textbooks, grammar guides, lesson plans, and worksheets for teachers working in Thailand.</p>
+                </div>
+                <div class="w-full md:w-72">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-search"></i>
+                        </span>
+                        <input type="text" id="library-search" onkeyup="filterLibrary()" placeholder="Search textbooks..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Grid -->
+            <div id="library-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Book 1 -->
+                <div class="book-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-title="English for Thai Students Grammar Guide">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="w-12 h-16 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold text-xl shadow-inner">
+                                <i class="fa-solid fa-book"></i>
+                            </span>
+                            <span class="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-md">PDF • 24 MB</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">English for Thai Students: Grammar & Phonics</h3>
+                        <p class="text-xs text-brand-600 font-semibold mb-3">Author: Dr. Somchai & Oxford Press Asia</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">Specialized guide tailored for Thai learners, addressing common phonetic difficulties and pronunciation nuances.</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">Downloads: 1,420</span>
+                        <button onclick="openDownloadModal('English for Thai Students: Grammar & Phonics')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            <i class="fa-solid fa-download mr-1"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-title="Business English Lesson Plans">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="w-12 h-16 bg-amber-100 text-amber-700 rounded-lg flex items-center justify-center font-bold text-xl shadow-inner">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </span>
+                            <span class="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-md">DOCX/PDF • 15 MB</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Business English & Corporate Training Plans</h3>
+                        <p class="text-xs text-brand-600 font-semibold mb-3">Author: Teacher Hub Bangkok</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">Ready-to-use lesson plans for teaching corporate clients, bank employees, and hospitality staff in Bangkok and Phuket.</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">Downloads: 890</span>
+                        <button onclick="openDownloadModal('Business English & Corporate Training Plans')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            <i class="fa-solid fa-download mr-1"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-title="Kindergarten ESL Activities">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="w-12 h-16 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-xl shadow-inner">
+                                <i class="fa-solid fa-child"></i>
+                            </span>
+                            <span class="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-md">PDF • 32 MB</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Kindergarten ESL Games & Flashcards</h3>
+                        <p class="text-xs text-brand-600 font-semibold mb-3">Author: KinderBright Thailand</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">Comprehensive collection of engaging games, flashcards, and songs designed for young learners aged 3 to 6.</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">Downloads: 2,300</span>
+                        <button onclick="openDownloadModal('Kindergarten ESL Games & Flashcards')" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all">
+                            <i class="fa-solid fa-download mr-1"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 5: MARKETING & SEO GUIDE ================= -->
+        <div id="tab-marketing" class="tab-content">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-sun-500 to-amber-600 rounded-3xl p-8 text-slate-900 shadow-lg mb-8">
+                    <span class="bg-slate-900 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3 inline-block">Webmaster Growth Playbook</span>
+                    <h1 class="text-3xl font-extrabold mb-3">How to Promote & Rank Your Educational Website in Thailand</h1>
+                    <p class="text-slate-900 text-sm md:text-base leading-relaxed font-medium">
+                        A step-by-step promotion strategy to grow traffic, attract expat teachers, and rank on search engines across competitive Thai educational markets (Bangkok, Phuket, Chiang Mai).
+                    </p>
+                </div>
+
+                <!-- Accordion / Strategy Cards -->
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center mb-3">
+                            <span class="w-8 h-8 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold mr-3 text-sm">1</span>
+                            Location-Based SEO & Long-Tail Keywords
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed pl-11">
+                            Target specific niche keywords such as <em>"English teaching jobs in Phuket"</em>, <em>"private tutor Bangkok"</em>, or <em>"Non-B visa teacher guide Thailand"</em>. Publishing authoritative guides on Thai work permits naturally drives organic search traffic.
+                        </p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center mb-3">
+                            <span class="w-8 h-8 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold mr-3 text-sm">2</span>
+                            Expat Community Engagement & Social Media
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed pl-11">
+                            Thailand's expat ecosystem thrives on Facebook Groups ("Expats in Bangkok", "Teachers in Thailand") and Telegram channels. Share free teaching resources, lesson plans, and job alerts directly within these communities.
+                        </p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center mb-3">
+                            <span class="w-8 h-8 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold mr-3 text-sm">3</span>
+                            Strategic Partnerships with Language Schools
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed pl-11">
+                            Offer school directors free access to your teacher resume database in exchange for backlinks to your platform. Cross-promotion with local education bloggers and influencers accelerates visibility.
+                        </p>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center mb-3">
+                            <span class="w-8 h-8 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold mr-3 text-sm">4</span>
+                            Targeted Paid Advertising (Google & Meta)
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed pl-11">
+                            Run Google Ads targeting keywords for teacher recruitment. Cost-per-click in Thailand is often lower than in Western markets while offering high conversion rates for premium tutoring services.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AI Info Modal -->
+    <div id="ai-info-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeAiInfoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Can AI Automatically Collect Job Listings?</h3>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                <strong>Yes, absolutely!</strong> AI scrapers and intelligent automation agents can collect job data from external websites using the following methods:
+            </p>
+            <ul class="space-y-2 text-sm text-slate-700 mb-6">
+                <li class="flex items-start"><i class="fa-solid fa-check text-brand-600 mt-1 mr-2"><span>Parsing public RSS feeds and career pages of major Thai teaching boards (Ajarn.com, Teach Away).</span></i></li>
+                <li class="flex items-start"><i class="fa-solid fa-check text-brand-600 mt-1 mr-2"><span>Using LLMs to parse unstructured job descriptions into clean, standardized job cards.</span></i></li>
+                <li class="flex items-start"><i class="fa-solid fa-check text-brand-600 mt-1 mr-2"><span>Automatic deduplication and translation of requirements for international teachers.</span></i></li>
+            </ul>
+            <button onclick="closeAiInfoModal()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl transition-all">
+                Got it, thanks!
+            </button>
+        </div>
+    </div>
+
+    <!-- Job Apply Modal -->
+    <div id="apply-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl relative">
+            <button onclick="closeApplyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center text-xl mb-4">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <h3 id="apply-modal-title" class="text-xl font-bold text-slate-900 mb-2">Apply for Vacancy</h3>
+            <p class="text-sm text-slate-600 mb-4">Your registered resume and contact details will be forwarded directly to the school.</p>
+            <form onsubmit="submitJobApplication(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Your Email or Telegram</label>
+                    <input type="text" required placeholder="teacher@example.com / @telegram" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Cover Note</label>
+                    <textarea rows="3" placeholder="Hello, I am interested in this position and ready to start..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl transition-all">
+                    Send Application
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Generic Notification / Success Modal -->
+    <div id="notification-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl relative">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2" id="notif-title">Success!</h3>
+            <p id="notif-message" class="text-sm text-slate-600 mb-6">Action completed successfully.</p>
+            <button onclick="closeNotificationModal()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 rounded-xl transition-all">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-brand-600 to-sun-500 rounded-xl flex items-center justify-center text-white text-xl">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white">ThaiTeacher Hub 2026</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <button onclick="switchTab('jobs')" class="hover:text-white transition-colors">Jobs</button>
+                    <button onclick="switchTab('resumes')" class="hover:text-white transition-colors">Resumes</button>
+                    <button onclick="switchTab('online')" class="hover:text-white transition-colors">Online Teaching</button>
+                    <button onclick="switchTab('library')" class="hover:text-white transition-colors">Textbooks</button>
+                    <button onclick="switchTab('marketing')" class="hover:text-white transition-colors">SEO Guide</button>
+                </div>
+                <p class="text-xs text-slate-500">© 2026 ThaiTeacher Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Tab Navigation Function
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-brand-700', 'bg-brand-50');
+                btn.classList.add('text-slate-600', 'hover:text-brand-600', 'hover:bg-slate-100');
+            });
+
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:text-brand-600', 'hover:bg-slate-100');
+                activeBtn.classList.add('text-brand-700', 'bg-brand-50');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Job Filtering Logic
+        function filterJobs() {
+            const searchInput = document.getElementById('job-search-input').value.toLowerCase();
+            const locationFilter = document.getElementById('job-location-filter').value;
+            const typeFilter = document.getElementById('job-type-filter').value;
+
+            const cards = document.querySelectorAll('.job-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const location = card.getAttribute('data-location');
+                const type = card.getAttribute('data-type');
+                const textContent = card.innerText.toLowerCase();
+
+                const matchesSearch = textContent.includes(searchInput);
+                const matchesLocation = !locationFilter || location === locationFilter;
+                const matchesType = !typeFilter || type === typeFilter;
+
+                if (matchesSearch && matchesLocation && matchesType) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noJobsEl = document.getElementById('no-jobs-found');
+            if (visibleCount === 0) {
+                noJobsEl.classList.remove('hidden');
+            } else {
+                noJobsEl.classList.add('hidden');
+            }
+
+            document.getElementById('job-count-badge').innerText = visibleCount;
+        }
+
+        function resetJobFilters() {
+            document.getElementById('job-search-input').value = '';
+            document.getElementById('job-location-filter').value = '';
+            document.getElementById('job-type-filter').value = '';
+            filterJobs();
+        }
+
+        // Library Filtering Logic
+        function filterLibrary() {
+            const query = document.getElementById('library-search').value.toLowerCase();
+            const books = document.querySelectorAll('.book-card');
+            books.forEach(book => {
+                const title = book.getAttribute('data-title').toLowerCase();
+                const text = book.innerText.toLowerCase();
+                if (title.includes(query) || text.includes(query)) {
+                    book.style.display = 'flex';
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Controls
+        function openAiInfoModal() {
+            document.getElementById('ai-info-modal').classList.remove('hidden');
+        }
+        function closeAiInfoModal() {
+            document.getElementById('ai-info-modal').classList.add('hidden');
+        }
+
+        function openApplyModal(jobTitle) {
+            document.getElementById('apply-modal-title').innerText = 'Apply for: ' + jobTitle;
+            document.getElementById('apply-modal').classList.remove('hidden');
+        }
+        function closeApplyModal() {
+            document.getElementById('apply-modal').classList.add('hidden');
+        }
+
+        function openDownloadModal(bookName) {
+            openNotificationModal('Download started for "' + bookName + '"!');
+        }
+
+        function openNotificationModal(msg) {
+            document.getElementById('notif-message').innerText = msg;
+            document.getElementById('notification-modal').classList.remove('hidden');
+        }
+        function closeNotificationModal() {
+            document.getElementById('notification-modal').classList.add('hidden');
+            closeApplyModal();
+        }
+
+        // Form Submissions
+        function submitResumeForm(e) {
+            e.preventDefault();
+            const name = document.getElementById('res-name').value;
+            const massApply = document.getElementById('res-mass-apply').checked;
+            let msg = 'Teacher resume for ' + name + ' published successfully!';
+            if (massApply) {
+                msg += ' Automated mass distribution to 120+ schools across Thailand has been launched!';
+            }
+            openNotificationModal(msg);
+            document.getElementById('resume-form').reset();
+        }
+
+        function submitJobApplication(e) {
+            e.preventDefault();
+            openNotificationModal('Your application has been successfully sent to the employer!');
+        }
+    </script>
+</body>
+</html>
